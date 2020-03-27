@@ -1,0 +1,33 @@
+[package]
+name = "lm75a-temperature-i2c-example"
+version = "0.1.0"
+authors = ["David Haig <david@ninjasource.com>"]
+edition = "2018"
+
+[dependencies]
+embedded-hal = "0.2"
+panic-itm = "0.4"
+cortex-m-rt = "0.6"
+nb = "0.1"
+lm75 = "0.1"
+cortex-m = "0.6"
+
+[dependencies.stm32f1xx-hal]
+version = "0.3"
+features = ["stm32f103", "rt"]
+
+[features]
+doc = []
+rt = ["stm32f1xx-hal/rt"]
+stm32f103 = ["stm32f1xx-hal/stm32f103"]
+
+# this allows debugging in release mode (otherwise you only see assembly)
+[profile.release]
+#debug = true
+opt-level = 'z'  # Optimize for size.
+lto = true
+codegen-units = 1
+
+# this makes the binary small enough to fit on the device while still being able to build and upload in debug mode
+[profile.dev]
+opt-level = 's'
